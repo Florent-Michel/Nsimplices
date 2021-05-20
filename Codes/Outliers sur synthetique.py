@@ -27,7 +27,7 @@ plt.rcParams["savefig.directory"] = os.getcwd() # To save figures to directory
 ### test data
 
 
-data = pd.read_csv(r'C:\Users\jules\Ecole\Polytechnique\Stage 3A\Bibliographie\bdd_synthetic_rdim40.csv',sep=';',header=None)
+data = pd.read_csv(r'..\Databases\bdd_synthetic_rdim40.csv',sep=';',header=None)
 data.head()
 #df.sample(frac = 0.1)
 
