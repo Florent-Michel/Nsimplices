@@ -153,24 +153,20 @@ def DetectOutliers_n(N,data,trim,cutoff,n,Med):
 def CorrectDistances(N,distances,list_outliers,n,h):
     cdata=1.0*distances
     for i in list_outliers:
-        #ne pas changer 2 fois la distance entre 2 outliers #?
+        
         for j in [x for x in range(N) if x!=i]:
-            # if j in list_outliers:
-            #     cdata[i,j] = cdata[j,i] = np.sqrt(np.max((0.,(cdata[i,j]**2 - ((h[min(i,j)])**2/2)))))
-            # else:
+            
             cdata[i,j] = cdata[j,i] = np.sqrt(np.max((0.,(cdata[i,j]**2 - h[i]**2))))
             
-                        # if j not in dico_outliers:
-                        #     cdata[i,j] = cdata[j,i] = np.sqrt(np.abs((cdata[i,j]**2 - h[i]**2+h[j]**2)))#np.sqrt(np.max((0.,(cdata[i,j]**2 - h[i]**2))))
-                        # else:
-                        # cdata[i,j] = cdata[j,i] = np.sqrt(np.abs((cdata[i,j]**2 - Moy[i]**2)))
-                            
-                        # Limitation : le calcul ci-dessus ne tient pas compte d'éventuels clusters d'outliers.
-                        # cdata[i,j] = cdata[j,i] =np.sqrt(np.abs(cdata[i,j]**2 - h[i]**2-2*h[i]*h[j]))
-    print("h")
-    print(h)
-    print(h[list_outliers[0]])
+            
     return cdata
+
+
+"""
+    Other correction, most used:
+    
+    Correct the coordinates matrix, by projecting the outliers on the subspace
+"""
 
 def CorrectProjection(N,Data,list_outliers,rdim):
     
@@ -291,11 +287,8 @@ def nSimpl_RelevantDim_ScreePlot(coord,data,cutoff,trim,n0=2,nf=6):
     lambd=p[1]
     B=p[2]
     
-    # if (p[1]<1.):
-    #     rdim=round(n0+p[0]-1)
-    # else:
-    #     rdim=round(p[0]+dimension[0])
-    # print(rdim)
+    
+    
     p=0.03
     rdim=int(round(1/lambd*np.log((1-p)/p/B)))
     print(1/lambd*np.log((1-p)/p/B))
@@ -307,7 +300,7 @@ def nSimpl_RelevantDim_ScreePlot(coord,data,cutoff,trim,n0=2,nf=6):
     h=dico_h[rdim]
     cdata=CorrectDistances(N,cdata,dico_outliers[rdim],rdim,h)
     
-    #correct by projection on the plan (if plan vectores known)
+    #correct by projection on the plan (if plan vectors known)
     print("correction")
     cdata_proj,coord_corr=CorrectProjection(N,coord,dico_outliers[rdim],rdim)
     
