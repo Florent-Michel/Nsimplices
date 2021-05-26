@@ -16,7 +16,7 @@ from sklearn.decomposition import PCA
 import time
 
 
-# Librairie nSimplices courante
+# current nSimplices library
 exec(compile(open(r"nSimplices_new.py", encoding="utf8").read(), "nSimplices_new.py", 'exec'))
 
 # set matplotlib default savefig directory
@@ -30,7 +30,7 @@ data = pd.read_csv(r'..\Databases\bdd_synthetic_rdim40.csv',sep=';',header=None)
 data.head()
 #df.sample(frac = 0.1)
 
-### Traitement du fichier
+### dataset treatment
 
 
 X=data
@@ -46,15 +46,15 @@ D_TRUE=squareform(D)
 proportion=0.05
 N=tab.shape[0]
 k=int(np.ceil(proportion*N))
-# Tirage aléatoire de quelques points hors plan
+# random draw of some points, to become outliers
 indices=np.sort(alea.sample(range(N),k))
 for n in indices:
     horsplan=alea.uniform(-50,50)
 
-    #2 dimensions pertinentes dans 7 dimensions totales
+    #keep the rdim components, and change one other component
     i=alea.randint(40,48)
     tab.loc[n,i] = horsplan
-    print(str(n)+" "+str(i)+" devient "+ str(horsplan))
+    print(str(n)+" "+str(i)+" becomes "+ str(horsplan))
 
 
 
