@@ -37,12 +37,6 @@ def nSimplexVolume(indices,squareDistMat,exactdenominator=True):
     return np.sqrt(abs(VnSquare/denominator))
 
 
-""" Convert cm to inches     
-"""
-
-def cm2inch(value):
-    return value/2.54
-
 '''
 Draw B groups of (n-1) points to create B nsimplices containing i, to calculate the heights of the point i
 '''
@@ -260,6 +254,9 @@ def nSimpl_RelevantDim_ScreePlot(coord,data,cutoff,trim,n0=2,nf=6):
     # print(rdim)
     # rdim=2
     
+    
+    #Determination of the relevant dimension with a sigmoid-like function
+    
     def sigmoid(x, A, lambd, B,C):
         
         return (A/(1.0+B*np.exp(lambd*x))+C)
@@ -269,6 +266,7 @@ def nSimpl_RelevantDim_ScreePlot(coord,data,cutoff,trim,n0=2,nf=6):
     
     p0=[nb_outliers[0],1,0,0]
     
+    #fitting the function on the points
     p , e = optimize.curve_fit(sigmoid, dimension, nb_outliers,p0,maxfev=50000)
     xd = np.linspace(dimension[0], dimension[-1], 100)
     
@@ -288,7 +286,7 @@ def nSimpl_RelevantDim_ScreePlot(coord,data,cutoff,trim,n0=2,nf=6):
     B=p[2]
     
     
-    
+    #rdim here is the abscissa of the elbow
     p=0.03
     rdim=int(round(1/lambd*np.log((1-p)/p/B)))
     print(1/lambd*np.log((1-p)/p/B))
