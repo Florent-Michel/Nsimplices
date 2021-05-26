@@ -66,38 +66,9 @@ def DrawNSimplices(data,N,B,i,n):
     return B,hcollection
 
 """ """
-""" Find outlyingness for a specific dimension n                                                                      """
-"""                                                                                     """
-"""   Boucle sur chaque point, bootstrap sur le reste pour n fixé                         
-
-      Calcul de h_i = median( n * V_n / V_{n-1} ) , 
-                avec Vn incluant i, 
-                V_{n-1} ne l'incluant pas.                                                """
-
-"""   Calcul de h_i / median(delta_.,i)                                                   """
-
-"""   Calcul de h_signif = median( h_i / median(delta_i,.) )_90%, 
-                sur les x% de h_i les moins élevés.
-                Est-ce > cutoff ? Si oui, ajouter cette dimension supplémentaire.         """
-
-"""   Calculer et collecter : delta^corr_i² = delta_i² - h_i² ,                           """
-"""             dès que : h_i / median(delta_i,.) > cutoff ,                          """
-"""             mais :    median( h_i / median(delta_i,.) ) < cutoff.                 
-
-      Calculer l'estimée de negentropie Jn pour l'ensemble des h (trimmed)
-      (See FastICA publications, Aapo Hyvärinen, Helsinki University of Technology)
-                J = [ E G(u) - E G(v) ]**2
-                avec G(u) = 1/alpha log cosh(alpha*u), ou
-                     G(u) = -exp(-u**2/2),
-                avec v = N(0,1) et
-                u = h / stddev(h), où h fait partie de l'ensemble trimmed des h.
-                
-                Remarque 1 : 
-                Le signe, manquant dans h et donc dans u, n'est pas nécessaire au calcul de G.
-                Remarque 2 :
-                Il n'est pas nécessaire de centrer, car h correspond à la distance
-                à l'origine, où l'origine est le volume V_{n-1}. 
-                Origine = V_{n-1} = "base" du simplexe de dimension n.
+""" Determination of the height of each point   
+                                                                  
+Iteration on each point of the dataset, and the height is the median of heights of the points in B n-simplices
 
 """
 def nSimplwhichh(N,data,trim,n,seed=1,figpath=os.getcwd(), verbose=False):
