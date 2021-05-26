@@ -17,8 +17,7 @@ import time
 
 
 # Librairie nSimplices courante
-exec(compile(open(r"nSimplices_debut modif.py", encoding="utf8").read(), "nSimplices_debut modif.py", 'exec'))
-#execfile("/path-to-code/2021-04-01_nSimplices-lib.py")
+exec(compile(open(r"nSimplices_new.py", encoding="utf8").read(), "nSimplices_new.py", 'exec'))
 
 # set matplotlib default savefig directory
 #os.chdir("/data/user/my-directory/")
